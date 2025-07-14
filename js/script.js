@@ -56,7 +56,7 @@ function iniciarJogo() {
   jogadorAtual = nick;
   telaNick.style.display = "none";
   cliques = 0;
-  tempo = 25;
+  tempo = 35;
   quantCliques.textContent = cliques;
   moverImagem();
   iniciarContagem();
