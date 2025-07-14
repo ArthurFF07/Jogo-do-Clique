@@ -7,7 +7,7 @@ const nickInput = document.getElementById("nickInput");
 const tabelaRecordes = document.getElementById("tabelaRecordes");
 
 let cliques = 0;
-let tempo = 25;
+let tempo = 35;
 let intervalo;
 let jogadorAtual = "";
 let recordes = [];
