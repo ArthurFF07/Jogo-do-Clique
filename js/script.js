@@ -1,47 +1,81 @@
 
-var imagem = document.getElementById("cliqueImagem");
-var contadorCliques = document.getElementById("quantCliques");
-var cronometro = document.getElementById("timer");
+const cliqueImagem = document.getElementById("cliqueImagem");
+const quantCliques = document.getElementById("quantCliques");
+const timer = document.getElementById("timer");
+const telaNick = document.getElementById("telaNick");
+const nickInput = document.getElementById("nickInput");
+const tabelaRecordes = document.getElementById("tabelaRecordes");
 
-var cliques = 0;
-var tempo = 25;
-var intervalo;
+let cliques = 0;
+let tempo = 25;
+let intervalo;
+let jogadorAtual = "";
+let recordes = [];
 
 function moverImagem() {
-  var larguraJanela = window.innerWidth - imagem.offsetWidth;
-  var alturaJanela = window.innerHeight - imagem.offsetHeight;
+  const largura = window.innerWidth - cliqueImagem.offsetWidth;
+  const altura = window.innerHeight - cliqueImagem.offsetHeight;
+  const x = Math.random() * largura;
+  const y = Math.random() * altura;
 
-  var posicaoX = Math.random() * larguraJanela;
-  var posicaoY = Math.random() * alturaJanela;
-
-  imagem.style.left = posicaoX + "px";
-  imagem.style.top = posicaoY + "px";
+  cliqueImagem.style.left = x + "px";
+  cliqueImagem.style.top = y + "px";
 }
 
+
 function atualizarTempo() {
-  cronometro.textContent = tempo;
+  timer.textContent = tempo;
   if (tempo <= 0) {
     clearInterval(intervalo);
-    alert("Tempo esgotado! Total de cliques: " + cliques);
-    location.reload(); 
+    alert(`Tempo esgotado!\nNick: ${jogadorAtual}\nCliques: ${cliques}`);
+    registrarRecorde(jogadorAtual, cliques);
+    reiniciarJogo();
   }
 }
 
 function iniciarContagem() {
   atualizarTempo();
-  intervalo = setInterval(function() {
+  intervalo = setInterval(() => {
     tempo--;
     atualizarTempo();
   }, 1000);
 }
 
-imagem.onclick = function() {
+cliqueImagem.onclick = () => {
   cliques++;
-  contadorCliques.textContent = cliques;
+  quantCliques.textContent = cliques;
   moverImagem();
-  atualizarTempo();
+};
+
+function iniciarJogo() {
+  const nick = nickInput.value.trim();
+  if (nick === "") {
+    alert("Digite um nick válido!");
+    return;
+  }
+  jogadorAtual = nick;
+  telaNick.style.display = "none";
+  cliques = 0;
+  tempo = 25;
+  quantCliques.textContent = cliques;
+  moverImagem();
+  iniciarContagem();
 }
 
-
-moverImagem();
-iniciarContagem();
+function registrarRecorde(nick, pontos) {
+  recordes.push({ nick, cliques: pontos });
+  recordes.sort((a, b) => b.cliques - a.cliques);
+  atualizarTabela();
+}
+function atualizarTabela() {
+  tabelaRecordes.innerHTML = "";
+  for (const recorde of recordes) {
+    const linha = document.createElement("tr");
+    linha.innerHTML = `<td>${recorde.nick}</td><td>${recorde.cliques}</td>`;
+    tabelaRecordes.appendChild(linha);
+  }
+}
+function reiniciarJogo() {
+  telaNick.style.display = "flex";
+  nickInput.value = "";
+}
