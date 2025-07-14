@@ -1,13 +1,31 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-
 <head>
   <meta charset="UTF-8">
   <title>Jogo de Clique</title>
   <link rel="stylesheet" href="style/style.css">
 </head>
-
 <body>
+
+  <!-- Tela de entrada do nick -->
+  <div id="telaNick">
+    <h2>Digite seu Nick:</h2>
+    <input type="text" id="nickInput" placeholder="Seu nome...">
+    <button onclick="iniciarJogo()">Iniciar Jogo</button>
+  </div>
+
+  <!-- Tabela de recordes -->
+  <div id="ranking">
+    <h3>Placar de Recordes</h3>
+    <table id="tabelaRecordes">
+      <thead>
+        <tr><th>Nick</th><th>Cliques</th></tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+
+  <!-- Jogo -->
   <div id="container">
     <img id="pf" src="img/icegif-763.gif">
     <div id="contagens">
@@ -19,5 +37,4 @@
 
   <script src="js/script.js"></script>
 </body>
-
 </html>
