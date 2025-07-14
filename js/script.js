@@ -46,7 +46,7 @@ cliqueImagem.onclick = () => {
   quantCliques.textContent = cliques;
   moverImagem();
 };
-
+// Inicia o jogo após digitar o nick
 function iniciarJogo() {
   const nick = nickInput.value.trim();
   if (nick === "") {
@@ -61,12 +61,13 @@ function iniciarJogo() {
   moverImagem();
   iniciarContagem();
 }
-
+// Salva e ordena o recorde
 function registrarRecorde(nick, pontos) {
   recordes.push({ nick, cliques: pontos });
   recordes.sort((a, b) => b.cliques - a.cliques);
   atualizarTabela();
 }
+// Mostra a tabela atualizada
 function atualizarTabela() {
   tabelaRecordes.innerHTML = "";
   for (const recorde of recordes) {
@@ -75,6 +76,7 @@ function atualizarTabela() {
     tabelaRecordes.appendChild(linha);
   }
 }
+// Reinicia o jogo mostrando a tela de nick
 function reiniciarJogo() {
   telaNick.style.display = "flex";
   nickInput.value = "";
